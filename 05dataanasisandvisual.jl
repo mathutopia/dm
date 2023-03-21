@@ -33,6 +33,9 @@ data_url = "https://raw.githubusercontent.com/mathutopia/dm/main/data/trainbx.cs
 # ╔═╡ 4804c8e9-3edc-4243-9a0e-e6a5da52916c
 train = DataFrame(CSV.File(HTTP.get(data_url).body))
 
+# ╔═╡ b264515e-7230-42cc-81a0-a2be0977362b
+train2 = CSV.read("data/trainbx.csv", DataFrame)
+
 # ╔═╡ fc284c77-979c-445e-89b5-5ef58fa25bc6
 md"""
 ### 数据字段描述
@@ -2130,6 +2133,7 @@ version = "3.5.0+0"
 # ╠═b7736fd0-bed1-43fb-a8fa-e09496dead3d
 # ╠═dc840455-2138-42fb-93b9-5897647a8fea
 # ╠═4804c8e9-3edc-4243-9a0e-e6a5da52916c
+# ╠═b264515e-7230-42cc-81a0-a2be0977362b
 # ╟─fc284c77-979c-445e-89b5-5ef58fa25bc6
 # ╠═b2107628-bb7b-4fdf-9a3b-7920b8eebfbe
 # ╠═9c6d4886-66c1-485d-8f26-d59af544d2e8
