@@ -25,7 +25,7 @@ md"""
 """
 
 # ╔═╡ 93c54d9b-9077-437c-bf20-4e0b079e7287
-train = CSV.read("data\\trainbx.csv", DataFrame)
+train = CSV.read("https://github.com/mathutopia/dm/blob/main/data/trainbx.csv", DataFrame)
 
 # ╔═╡ fc284c77-979c-445e-89b5-5ef58fa25bc6
 md"""
