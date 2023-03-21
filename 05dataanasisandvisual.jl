@@ -7,6 +7,9 @@ using InteractiveUtils
 # ╔═╡ 1a10c180-c327-11ed-223b-1183f5350f3b
 using PlutoUI, CSV, DataFrames, DataFramesMeta,CairoMakie,StatsBase,CategoricalArrays, AlgebraOfGraphics
 
+# ╔═╡ b7736fd0-bed1-43fb-a8fa-e09496dead3d
+using HTTP
+
 # ╔═╡ dd4ddb7f-c5e3-4fff-9b76-f4bf880b5a17
 begin
 hint(text) = Markdown.MD(Markdown.Admonition("tip", "💡 提 示", [text])) # 绿色
@@ -24,8 +27,11 @@ md"""
 下面读取数据，并简单分析一下数据的类型。
 """
 
-# ╔═╡ 93c54d9b-9077-437c-bf20-4e0b079e7287
-train = CSV.read("data/trainbx.csv", DataFrame)
+# ╔═╡ dc840455-2138-42fb-93b9-5897647a8fea
+data_url = "https://raw.githubusercontent.com/mathutopia/dm/main/data/trainbx.csv"
+
+# ╔═╡ 4804c8e9-3edc-4243-9a0e-e6a5da52916c
+train = DataFrame(CSV.File(HTTP.get(data_url).body))
 
 # ╔═╡ fc284c77-979c-445e-89b5-5ef58fa25bc6
 md"""
@@ -620,6 +626,7 @@ CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 CategoricalArrays = "324d7699-5711-5eae-9e2f-1d82baa6b597"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DataFramesMeta = "1313f7d8-7da2-5740-9ea0-a2ca25f37964"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
@@ -630,6 +637,7 @@ CairoMakie = "~0.10.2"
 CategoricalArrays = "~0.10.7"
 DataFrames = "~1.5.0"
 DataFramesMeta = "~0.13.0"
+HTTP = "~1.7.4"
 PlutoUI = "~0.7.50"
 StatsBase = "~0.33.21"
 """
@@ -640,7 +648,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "9c5f7c73db2187bffa3c895615274e82be09ddaf"
+project_hash = "463be4ba0e9b10ad01d9f5223f4eca51557ac0ed"
 
 [[deps.AbstractFFTs]]
 deps = ["ChainRulesCore", "LinearAlgebra"]
@@ -704,6 +712,11 @@ version = "0.4.6"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[deps.BitFlags]]
+git-tree-sha1 = "43b1a4a8f797c1cddadf60499a8a077d4af2cd2d"
+uuid = "d1d4a3ce-64b1-5f1a-9ba4-7e7e69966f35"
+version = "0.1.7"
 
 [[deps.Bzip2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1079,6 +1092,12 @@ git-tree-sha1 = "53bb909d1151e57e2484c3d1b53e19552b887fb2"
 uuid = "42e2da0e-8278-4e71-bc24-59509adca0fe"
 version = "1.0.2"
 
+[[deps.HTTP]]
+deps = ["Base64", "CodecZlib", "Dates", "IniFile", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
+git-tree-sha1 = "37e4657cd56b11abe3d10cd4a1ec5fbdb4180263"
+uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+version = "1.7.4"
+
 [[deps.HarfBuzz_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "Graphite2_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Pkg"]
 git-tree-sha1 = "129acf094d168394e80ee1dc4bc06ec835e510a3"
@@ -1159,6 +1178,11 @@ version = "1.0.0"
 git-tree-sha1 = "5cd07aab533df5170988219191dfad0519391428"
 uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
 version = "0.1.3"
+
+[[deps.IniFile]]
+git-tree-sha1 = "f550e6e32074c939295eb5ea6de31849ac2c9625"
+uuid = "83e8ac13-25f8-5344-8a64-a9f2b223428f"
+version = "0.5.1"
 
 [[deps.InlineStrings]]
 deps = ["Parsers"]
@@ -1353,6 +1377,12 @@ version = "0.3.23"
 [[deps.Logging]]
 uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
+[[deps.LoggingExtras]]
+deps = ["Dates", "Logging"]
+git-tree-sha1 = "cedb76b37bc5a6c702ade66be44f831fa23c681e"
+uuid = "e6f89c97-d47a-5376-807f-9c37f3926c36"
+version = "1.0.0"
+
 [[deps.MIMEs]]
 git-tree-sha1 = "65f28ad4b594aebe22157d6fac869786a255b7eb"
 uuid = "6c6e2e6c-3030-632d-7369-2d6c69616d65"
@@ -1401,6 +1431,12 @@ deps = ["AbstractTrees", "Automa", "DataStructures", "FreeTypeAbstraction", "Geo
 git-tree-sha1 = "f04120d9adf4f49be242db0b905bea0be32198d1"
 uuid = "0a4f8689-d25c-4efe-a92b-7142dfc1aa53"
 version = "0.5.4"
+
+[[deps.MbedTLS]]
+deps = ["Dates", "MbedTLS_jll", "MozillaCACerts_jll", "Random", "Sockets"]
+git-tree-sha1 = "03a9b9718f5682ecb107ac9f7308991db4ce395b"
+uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
+version = "1.1.7"
 
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -1486,6 +1522,12 @@ version = "3.1.4+0"
 deps = ["Artifacts", "Libdl"]
 uuid = "05823500-19ac-5b8b-9628-191a04bc5112"
 version = "0.8.1+0"
+
+[[deps.OpenSSL]]
+deps = ["BitFlags", "Dates", "MozillaCACerts_jll", "OpenSSL_jll", "Sockets"]
+git-tree-sha1 = "6503b77492fd7fcb9379bf73cd31035670e3c509"
+uuid = "4d8831e6-92b7-49fb-bdf8-b643e874388c"
+version = "1.3.3"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -1742,6 +1784,11 @@ deps = ["Random", "Statistics", "Test"]
 git-tree-sha1 = "d263a08ec505853a5ff1c1ebde2070419e3f28e9"
 uuid = "73760f76-fbc4-59ce-8f25-708e95d2df96"
 version = "0.4.0"
+
+[[deps.SimpleBufferStream]]
+git-tree-sha1 = "874e8867b33a00e784c8a7e4b60afe9e037b74e1"
+uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
+version = "1.1.0"
 
 [[deps.SimpleTraits]]
 deps = ["InteractiveUtils", "MacroTools"]
@@ -2080,7 +2127,9 @@ version = "3.5.0+0"
 # ╟─dd4ddb7f-c5e3-4fff-9b76-f4bf880b5a17
 # ╟─d89b23a1-c58f-49bb-9cc1-4134176b7e3d
 # ╟─ed3df13a-3622-47ff-92e4-2c0a1f256c14
-# ╠═93c54d9b-9077-437c-bf20-4e0b079e7287
+# ╠═b7736fd0-bed1-43fb-a8fa-e09496dead3d
+# ╠═dc840455-2138-42fb-93b9-5897647a8fea
+# ╠═4804c8e9-3edc-4243-9a0e-e6a5da52916c
 # ╟─fc284c77-979c-445e-89b5-5ef58fa25bc6
 # ╠═b2107628-bb7b-4fdf-9a3b-7920b8eebfbe
 # ╠═9c6d4886-66c1-485d-8f26-d59af544d2e8
