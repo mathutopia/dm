@@ -34,7 +34,7 @@ md"""
 """
 
 # ╔═╡ b264515e-7230-42cc-81a0-a2be0977362b
-train = CSV.read("data/trainbx.csv", DataFrame)
+train = CSV.read("../data/trainbx.csv", DataFrame)
 
 # ╔═╡ fc284c77-979c-445e-89b5-5ef58fa25bc6
 md"""
