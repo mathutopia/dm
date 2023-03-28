@@ -17,12 +17,17 @@ md"""
 
 # ╔═╡ 51902669-01a7-4292-b666-db8d4006558c
 md"""
-## [test](./01lanbase-basic.html)
+## [语言基础](./languagebase/01lanbase-basic.html)
+"""
+
+# ╔═╡ 861ef740-68b4-498f-859c-b53683340974
+md"""
+## [数据探索](./dataexplore/04dataexplore-new.html)
 """
 
 # ╔═╡ f57797b6-e158-4c74-88dc-0a8e254cf615
 md"""
-## [test2](./05dataanasisandvisual.html)
+## [数据可视化](./datavisual/05dataanasisandvisual.html)
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -40,7 +45,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "502a5e5263da26fcd619b7b7033f402a42a81ffc"
+project_hash = "d8b0bbb312600ec81f2769bd72048a77429debd9"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -292,8 +297,9 @@ version = "17.4.0+0"
 
 # ╔═╡ Cell order:
 # ╟─813e4902-0fd1-4a5f-acb7-c5b464da6633
-# ╟─51902669-01a7-4292-b666-db8d4006558c
-# ╟─f57797b6-e158-4c74-88dc-0a8e254cf615
+# ╠═51902669-01a7-4292-b666-db8d4006558c
+# ╠═861ef740-68b4-498f-859c-b53683340974
+# ╠═f57797b6-e158-4c74-88dc-0a8e254cf615
 # ╟─05b17742-c8ac-11ed-3699-f9ab1116d040
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
