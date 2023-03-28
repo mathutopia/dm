@@ -573,20 +573,29 @@ md"""
 这里， 常见的图形属性包括： 颜色（color）， 标记（marker）， 布局等。前面提到的mapping的关键字参数都是用来干这个的。下面演示几种情形。
 """
 
+# ╔═╡ 932ef3ce-3f7a-40a9-a49b-1f93eb9c717b
+md"""
+下面们分析整体索赔、保费和是否欺诈的关系三个变量；
+"""
+
 # ╔═╡ a3798c93-7d0a-4a0c-9990-c642a6d576be
 data(train) * mapping(:total_claim_amount => :整体索赔,:policy_annual_premium => :保费, color = :fraud => nonnumeric, marker = :fraud => nonnumeric) * visual(Scatter) |> draw
+
+# ╔═╡ 5cbfdc0a-b062-42dd-9d56-670c72c2d62b
+md"""
+下面们分析整体索赔、保费、是否欺诈、以及学历等4个变量关系；
+"""
 
 # ╔═╡ 9d3cc8e3-0bce-409f-b029-b88b29fb6a5c
 data(train) * mapping(:total_claim_amount => :整体索赔,:policy_annual_premium => :保费, color = :fraud => nonnumeric, marker = :insured_education_level =>"学历" ) * visual(Scatter) |> draw
 
+# ╔═╡ 04137120-9424-46c1-8286-ba5f7f433d3e
+md"""
+下面们还是分析整体索赔、保费、是否欺诈、以及学历等4个变量关系， 但我们将其中一个变量映射到row上，相当于，画不同的子图。
+"""
+
 # ╔═╡ 531dcd4f-fc0b-4007-849b-646fdf436a48
 data(train) * mapping(:total_claim_amount => :整体索赔,:policy_annual_premium => :保费, color = :fraud => nonnumeric, row =  :insured_education_level =>"学历" ) * visual(Scatter) |> draw
-
-# ╔═╡ a83ffdbd-35eb-4fcf-8a27-f24413891b79
-data(train) * mapping(:fraud => nonnumeric, :age ) * visual(BoxPlot) |> draw
-
-# ╔═╡ 079ecd34-5551-46cb-b783-6f332225e4a4
-data(train) * mapping(:age,color = :fraud => nonnumeric, row =  :insured_sex =>"学历") * visual(Density,alpha = 0.3) |> draw
 
 # ╔═╡ a5d15ca5-6031-4eba-8e3b-19a5dd6ea4e3
 md"""
@@ -615,7 +624,7 @@ save("my_image.png", draw(plt); px_per_unit=3)
 plt = data(train) * mapping(:injury_claim , :property_claim, color = :fraud => nonnumeric)
 
 # ╔═╡ 4116eb6b-1e88-4014-bccf-a32a31808316
-save("data/my_image.png", draw(plt); px_per_unit=3)
+save("../data/my_image.png", draw(plt); px_per_unit=3)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2172,11 +2181,12 @@ version = "3.5.0+0"
 # ╠═995e9df4-0c1b-4645-a421-86e37a9d714b
 # ╠═9c0e364a-4bcf-4a13-b7e8-d5f64275ec8d
 # ╟─43d17b7e-5bd1-4be1-a1e5-15cb16bdea99
+# ╟─932ef3ce-3f7a-40a9-a49b-1f93eb9c717b
 # ╠═a3798c93-7d0a-4a0c-9990-c642a6d576be
+# ╟─5cbfdc0a-b062-42dd-9d56-670c72c2d62b
 # ╠═9d3cc8e3-0bce-409f-b029-b88b29fb6a5c
+# ╟─04137120-9424-46c1-8286-ba5f7f433d3e
 # ╠═531dcd4f-fc0b-4007-849b-646fdf436a48
-# ╠═a83ffdbd-35eb-4fcf-8a27-f24413891b79
-# ╠═079ecd34-5551-46cb-b783-6f332225e4a4
 # ╟─a5d15ca5-6031-4eba-8e3b-19a5dd6ea4e3
 # ╟─44b63870-1dbd-4742-8b20-280d4008e901
 # ╟─cf22a0eb-04fb-43f0-bbd7-4a0845855047
