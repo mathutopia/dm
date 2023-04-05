@@ -12,22 +12,60 @@ end
 
 # ╔═╡ 813e4902-0fd1-4a5f-acb7-c5b464da6633
 md"""
-# 1 Julia基础
+# 数据分析与挖掘：基于Julia
+这里是用Julia结合Pluto写的关于数据挖掘的实验、教学材料。
 """
+
+# ╔═╡ ec645b0a-14c1-4e7b-9397-44e33b7add5d
+TableOfContents(title = "目录", aside = false)
 
 # ╔═╡ 51902669-01a7-4292-b666-db8d4006558c
 md"""
-## [语言基础](./languagebase/01lanbase-basic.html)
+## 语言基础
+这里会包含一些关于Julia语言的语法知识。
+### 1. [简单入门](./languagebase/01lanbase-basic.html)
 """
 
 # ╔═╡ 861ef740-68b4-498f-859c-b53683340974
 md"""
-## [数据探索](./dataexplore/04dataexplore-new.html)
+## 数据探索
+这里是对数据进行探索分析的一些介绍。 主要是利用DataFramesMeta.jl结合DataFrames.jl包做数据的分析。
+
+### 1. [数据探索](./dataexplore/04dataexplore-new.html)
 """
 
 # ╔═╡ f57797b6-e158-4c74-88dc-0a8e254cf615
 md"""
-## [数据可视化](./datavisual/05dataanasisandvisual.html)
+## 数据可视化
+下面主要介绍Julia中的绘图包。 主要介绍AlgebraOfGraphics.jl（简写为AoG.jl）包的使用。 更多的信息可以参考官方文档[AlgebraOfGraphics](https://aog.makie.org/stable/)。
+
+AoG.jl是以Makie.jl作为绘图的后端， 因此， 有很多的操作需要用到Makie.jl的一些知识。关于Makie.jl可以参考其[官方文档](https://docs.makie.org/stable/)。 此外， makie生态还包含了大量的内容， 如果想深入了解用Makie作图、了解用Makie可以做哪些酷炫的事情， 可以访问[Makie家族](https://github.com/MakieOrg)的项目主页， 了解不同的项目在干什么。
+
+### 1. [AlgebraOfGraphics画图基础](./datavisual/05dataanasisandvisual.html)
+### 2. [Makie介绍](./datavisual/makieintro.html)
+---
+---
+
+如果Makie系列的画图无法使用， 也可以了解一下Plots.jl这个包。Plots.jl这个包可以同时使用多种后端。
+### 3. [Plots介绍]((./datavisual/Plotsintro.html))
+"""
+
+# ╔═╡ 6061ace5-8e44-433e-98b9-f6b677d38442
+md"""
+## 聚类分析
+
+### 1. [kmeans聚类](./clustering/01kmeans.html)
+
+
+
+"""
+
+# ╔═╡ a3c47663-49c6-490b-ae20-9b85c7126342
+md"""
+## 机器学习MLJ
+
+### 1. [数据类型与转换](./mlj/mljpre.html)
+
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -297,9 +335,12 @@ version = "17.4.0+0"
 
 # ╔═╡ Cell order:
 # ╟─813e4902-0fd1-4a5f-acb7-c5b464da6633
-# ╠═51902669-01a7-4292-b666-db8d4006558c
-# ╠═861ef740-68b4-498f-859c-b53683340974
+# ╟─ec645b0a-14c1-4e7b-9397-44e33b7add5d
+# ╟─51902669-01a7-4292-b666-db8d4006558c
+# ╟─861ef740-68b4-498f-859c-b53683340974
 # ╠═f57797b6-e158-4c74-88dc-0a8e254cf615
 # ╟─05b17742-c8ac-11ed-3699-f9ab1116d040
+# ╟─6061ace5-8e44-433e-98b9-f6b677d38442
+# ╟─a3c47663-49c6-490b-ae20-9b85c7126342
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
