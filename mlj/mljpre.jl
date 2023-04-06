@@ -292,6 +292,9 @@ md"""
 # ╔═╡ 9ff602b0-b6a5-4765-bf7b-2d5504ea28d1
 MLJ.transform(mach1, X)
 
+# ╔═╡ cfda0a8c-9922-4a99-b3e0-7edda069d54e
+X
+
 # ╔═╡ e773eeb7-7f52-43f8-906e-20a9af1fac8f
 md"""
 可以看到， X中转换之后， height字段变了， 其他的没有变化， 因为其他字段不是连续型的。
@@ -307,6 +310,12 @@ onehot = OneHotEncoder()
 
 # ╔═╡ 4bd5ac3e-8440-483e-89b5-5e40863f0916
 hotmach = fit!(machine(onehot, X))
+
+# ╔═╡ 7a85b2e3-2def-43ae-a1f6-d44745299e77
+md"""
+!!! warn "注意"
+	上面相当于把绑定数据，拟合转换器的操作统一到一起啦。
+"""
 
 # ╔═╡ 0d544a41-8769-4f57-8664-a4ae9c723705
 MLJ.transform(hotmach, X)
@@ -348,12 +357,6 @@ encoder = ContinuousEncoder()
 
 # ╔═╡ bf83a50d-c755-4922-888a-6e0518cb3578
 mach = fit!(machine(encoder, X))
-
-# ╔═╡ 7a85b2e3-2def-43ae-a1f6-d44745299e77
-md"""
-!!! warn "注意"
-	上面相当于把绑定数据，拟合转换器的操作统一到一起啦。
-"""
 
 # ╔═╡ 25d14618-62e5-420a-8fae-57ca7873a0f1
 W = MLJ.transform(mach, X)
@@ -1324,6 +1327,7 @@ version = "17.4.0+0"
 # ╟─d6957fd9-895f-48e9-a21e-b0f6047b7be5
 # ╟─d93349d9-74f7-41eb-badf-b845515b7a66
 # ╠═9ff602b0-b6a5-4765-bf7b-2d5504ea28d1
+# ╠═cfda0a8c-9922-4a99-b3e0-7edda069d54e
 # ╟─e773eeb7-7f52-43f8-906e-20a9af1fac8f
 # ╠═36fa8c94-468f-4d88-b91f-82fc7b0511a7
 # ╠═7e01c03f-c474-48d7-84d4-19563a402c2e
