@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.9
+# v0.19.23
 
 using Markdown
 using InteractiveUtils
@@ -189,12 +189,12 @@ md"""
 
 # ╔═╡ ea01216d-4997-4a7b-a86d-a19f9ae00762
 md"""
-### 3.1 类别标签转簇编号
+### 3.1 簇编号转类别标签
 为了计算方便， 我们需要明确不同的簇（1,2）应该被视为哪一个类别。即， 要给簇预测一个类别。 这可以通过将簇编号（1或2）转换为类别标签（0,1）实现。 这可以通过replace函数实现。 
 """
 
 # ╔═╡ 3b050523-24bc-4043-864b-68d64540c84f
-pred = replace(c1.assignments, 1 => 0, 2 => 1)
+pred = replace(c1.assignments, 1 => 1, 2 => 0)
 
 # ╔═╡ c6dc796a-ed8b-4591-b37c-f44802c7b34b
 md"""
@@ -220,13 +220,13 @@ md"""
 """
 
 # ╔═╡ ebe87c34-5a24-4068-9a05-f03f7a37ee98
-r = roc(train.fraud, pred)
+r = MLBase.roc(train.fraud, pred)
 
 # ╔═╡ 37e4c83e-5098-43e8-a31c-a549fd0a0103
-precision(r)
+MLBase.precision(r)
 
 # ╔═╡ da207e7a-9b3b-4688-8509-632ca5215f11
-recall(r)
+MLBase.recall(r)
 
 # ╔═╡ a13d4961-e0b0-420e-b55b-6856e2c6ab59
 md"""
@@ -301,10 +301,13 @@ feats = [:insured_education_level, :insured_occupation, :insured_hobbies,:insure
 end
 
 # ╔═╡ 506f3b51-afaa-4425-bbb3-bcf354ce0116
-data4 = @select train  :edu = categorical(:insured_education_level) :occu = categorical(:insured_occupation) :hobb = categorical(:insured_hobbies)
+data4 = @select train  :edu = categorical(:insured_education_level) :occu = categorical(:insured_occupation) :hobb = categorical(:insured_hobbies) :sex = categorical(:insured_sex)
 
 # ╔═╡ ef7b05e7-a57c-4a99-8237-5d0e55d32915
 onehot = OneHotEncoder()
+
+# ╔═╡ 84b28474-366f-4f8b-9bf9-ae5e3be92567
+mach2=machine(onehot, data4)
 
 # ╔═╡ ba409933-b750-464c-a3c3-d3b7e19605b7
 mach = fit!(machine(onehot, data4))
@@ -312,11 +315,14 @@ mach = fit!(machine(onehot, data4))
 # ╔═╡ 9d97305c-f9fa-4312-af5c-1c43f542918d
 Xn = MLJ.transform(mach, data4)
 
+# ╔═╡ 2c3df273-7afb-4734-8432-5399b632091e
+data4
+
 # ╔═╡ 99a17a8f-b59e-411f-b59c-b092f7f04015
 res = kmeans(Matrix(Xn)', 2)
 
 # ╔═╡ f0e44ab6-e8bb-49df-a443-c82c20d36b0b
-predn = replace(res.assignments, 1=>0, 2=>1)
+predn = replace(res.assignments, 1=>1, 2=>0)
 
 # ╔═╡ fd211bae-0ad8-4b3c-92d0-9692d20dbc9c
 pinggu(train.fraud, predn)
@@ -367,7 +373,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.0"
 manifest_format = "2.0"
-project_hash = "06e0070751132beeb00fe0272b09e531b2381c9b"
+project_hash = "438b7af9ed816450e4d805760476fca3e2ce54b8"
 
 [[deps.ARFFFiles]]
 deps = ["CategoricalArrays", "Dates", "Parsers", "Tables"]
@@ -2045,7 +2051,7 @@ version = "3.5.0+0"
 # ╠═ea69910f-04a6-4497-a219-f558485dd624
 # ╠═6d9c244a-54e4-4c11-a0db-a6539e450d78
 # ╠═f164abba-989b-4266-b739-f6079c3999ce
-# ╠═ea01216d-4997-4a7b-a86d-a19f9ae00762
+# ╟─ea01216d-4997-4a7b-a86d-a19f9ae00762
 # ╠═3b050523-24bc-4043-864b-68d64540c84f
 # ╟─c6dc796a-ed8b-4591-b37c-f44802c7b34b
 # ╟─9190077b-a778-48c7-9319-d7280efa9f2d
@@ -2067,15 +2073,17 @@ version = "3.5.0+0"
 # ╟─53d036a6-32fa-4173-8ffb-8c6a70506971
 # ╠═18ed70ea-dd2b-4d19-9edd-8e723a7157e9
 # ╠═61c5c9e9-2de6-463c-91ef-ae69faf40f02
-# ╠═95fc5fe5-3adf-43ca-b7ee-48eb67ae7247
+# ╟─95fc5fe5-3adf-43ca-b7ee-48eb67ae7247
 # ╠═27fa22b4-b17e-426d-b81f-dc4f653627fc
 # ╟─d1611274-ccdd-4805-9823-ee13ad2d93c4
 # ╠═86dc8505-f0ee-4eff-97f1-b7fc5fee26a8
 # ╠═3b46f67b-e775-42bf-a663-da9434774806
 # ╠═506f3b51-afaa-4425-bbb3-bcf354ce0116
 # ╠═ef7b05e7-a57c-4a99-8237-5d0e55d32915
+# ╠═84b28474-366f-4f8b-9bf9-ae5e3be92567
 # ╠═ba409933-b750-464c-a3c3-d3b7e19605b7
 # ╠═9d97305c-f9fa-4312-af5c-1c43f542918d
+# ╠═2c3df273-7afb-4734-8432-5399b632091e
 # ╠═99a17a8f-b59e-411f-b59c-b092f7f04015
 # ╠═f0e44ab6-e8bb-49df-a443-c82c20d36b0b
 # ╠═fd211bae-0ad8-4b3c-92d0-9692d20dbc9c
