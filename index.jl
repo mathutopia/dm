@@ -23,6 +23,7 @@ md"""
  - [软件安装](https://note.youdao.com/s/AwKm4OfU)
  - [变量与数值类型](./languagebase/vars.html)
  - [字符串](./languagebase/string.html)
+ - [日期与时间](./languagebase/datetime.html)
  - [容器类型](./languagebase/contains.html)
  - [数组类型](./languagebase/arrays.html)
  - [流程控制与函数编写](./languagebase/controlflow_functions.html)
