@@ -4,17 +4,16 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 7f9aabc0-105f-4ef6-b0c3-9f9539202f22
-md"""
-该教程粗略的摘录了 Julia 的基本语法，不熟悉 Julia 的同学可以先粗略地通读该教程，以大致熟悉基本操作。
+# ╔═╡ 51e56239-552b-43ca-8a36-6f0ea6f9d8be
+using PlutoUI
 
-如果想要了解详细内容可以查阅[官方文档](https://docs.julialang.org/en/v1/)，Julia 中文社区提供了中文版本的[文档](https://docs.juliacn.com/latest/)。 [B 站](https://www.bilibili.com/video/BV1Cb411W7Sr?p=1)有一个简单的视频教程。 这个教程的有部分代码来自该视频作者。 
-
-如果想比较全面的学一下Julia, 可以看看Github上面的这种本[Julia编程基础](https://github.com/hyper0x/JuliaBasics/tree/master/book)
-"""
+# ╔═╡ 88cc78ee-c228-4769-abdb-2946707c2301
+TableOfContents(title = "目录")
 
 # ╔═╡ a882c1f1-bbe8-4ae5-9639-269d8b8e3a05
 md"""
+# 变量与数值类型
+
 **程序 = 数据结构+算法**， 要学会编程， 你需要知道一些基本的数据结构（类型）以及如果去操作这些数据（算法）。 数据结构可以理解为数据的组织方式。
 
 数据保存在内存中， 为了操作特定的数据， 我们通常需要给数据取一个名字--变量名。
@@ -22,7 +21,7 @@ md"""
 
 # ╔═╡ c763528b-869d-4e25-9fef-fe30556e8ec9
 md"""
-# 变量
+## 变量
 在Julia中，变量是与值关联(或绑定)的名称。当您想要存储一个值时，它很有用(例如，你经过一些数学运算后得到的)以备以后使用。 通常， 我们会用**赋值操作符（=）**实现将一个值和对应的变量名关联起来 （也就是赋值的时候，实现变量的定义）。如`x=3`， 表示把数字3跟变量x绑定起来。 赋值操作符在很多语言中都是类似的。
 
 
@@ -69,12 +68,6 @@ md"""
 # ╔═╡ 982351d4-7065-4836-97e3-cd138065076c
 π * ⬠
 
-# ╔═╡ 90fd182e-8580-4187-97d8-dcd44940e86a
-md"""
-# 基础数据类型
-这里总结一些基础的数据类型， 主要有数值类型， 字符和字符串类型， 字典与集合， 数组等几种常见的类型。Julia的优势之一就是它强大的类型系统。 在Julia中，任何数据都是有类型的， 就像C语言， 从而可以使代码运算速度加快。 但与此同时， Julia也可以不指定数据类型， 这时候它会给数据一个默认的数据类型， 这让Julia写起来， 又有点像R和Python。 虽然我们可以不指定数据类型， 但知道一些基本的常识，有利于我们写出高性能的代码和读懂别人写的代码。因此， 下面过一下基本的一些数据类型。 参考[Julia编程基础第五章](https://github.com/hyper0x/JuliaBasics/blob/master/book/ch05.md)
-"""
-
 # ╔═╡ ebdd01c8-a5b9-4f29-a924-ac031967be0c
 md"""
 ## 数值类型
@@ -90,7 +83,7 @@ md"""
 
 # ╔═╡ 21bc77b9-eeaf-4d2a-ace6-d6aec98e9a4b
 md"""
-#### **获取对象的类型typeof**
+### 获取对象的类型typeof
 下面的代码显示整数默认是Int64类型， 实际上， 因为我的电脑是64位， 所以显示是Int64， 如果是32位的机器上，下面的结果会是Int32.
 """
 
@@ -99,8 +92,8 @@ typeof(10), typeof(10.5)
 
 # ╔═╡ aaa0b712-e6cd-492c-9ea0-ab2c07549754
 md"""
-#### 正负无穷大与不存在（Inf*, NaN*）
-Inf*表示无穷大（*表示宽度）， NaN*表示不是数（Not a Number）， 参考下面的例子。
+### 正负无穷大与不存在（Inf, NaN）
+Inf表示无穷大， NaN*表示不是数（Not a Number）， 参考下面的例子。
 """
 
 # ╔═╡ d673f90f-f0d1-400f-958a-623c17d00ba5
@@ -109,12 +102,13 @@ typemax(Int64), typemax(Float64), 1/0, 0 * Inf
 # ╔═╡ f0b321cd-0fa1-47c9-983a-35a5d2c1ca80
 md"""
 ## 运算符
-这里主要是总结一下Julia中的常见操作符，也称运算符（Operator）。 Julia中的运操作符是用于对变量和值执行操作的数学符号， 这些符号通常用来进行算术和逻辑计算。 操作符对其执行操作的变量称为操作数(Operands)。 比如，在表达式
+对于任何一种数据类型， 你都应该知道一些这些数据类型的**构造方法**和**操作方法**。 通常， 操作方法是各种函数。 下面介绍的很多运算符本质上也是一种函数。 
+
+这里结合数值类型总结一下Julia中的常见操作符，也称运算符（Operator）。 Julia中的运操作符是用于对变量和值执行操作的数学符号， 这些符号通常用来进行算术和逻辑计算。 操作符对其执行操作的变量称为操作数(Operands)。 比如，在表达式
 `a + b` 中， a和b就是操作数，而 `+` 就是操作符。 作为入门和基础的应用， 需要我们掌握以下四种运算符： 
 
 - 算术运算符  
 - 逻辑运算符  
-- 赋值操作符  
 - 矢量化的点操作符  
 - 比较运算符  
 
@@ -125,7 +119,7 @@ md"""
 # ╔═╡ aea5a22c-9976-4983-b932-0cf56766aff6
 md"""
 ### 算术运算符
-算术运算符是一门语言中常见的， 主要包括 + - * /等。
+算术运算符是一门语言中最常见的， 主要包括 + - * /等。
 
 |运算符| 含义 | 用法|
 |-----|------|-----|
@@ -138,7 +132,7 @@ md"""
 | % | 求余数 | a % b|
 | ^ | 乘方  | a ^ b|
 
-注意， + - 也可以用作一元运算符， 在变量前添加 + ， 不会改变变量值； 添加 - ， 会将变量变相反数。 上面的$\div$在编辑器中可以通过 \div+[TAB] 键输入。 这也是Julia特殊的地方， 它是完全支持Unicode字符的， 所以我们可以使用类似于数学书写的方式去写各种变量。 以后看到类似的数学符号， 他们都是通过相应的latex符号+ TAB键打印出来的。 你也可以通过复制一个符号， 然后用 `? 符号`的方式在REPL中获得其书写方法帮助。
+注意， + - 也可以用作一元运算符， 在变量前添加 + ， 不会改变变量值； 添加 - ， 会将变量变相反数。 上面的$\div$在编辑器中可以通过 \div+[TAB] 键输入。 这也是Julia特殊的地方， 它是完全支持Unicode字符的， 所以我们可以使用类似于数学书写的方式去写各种变量。 以后看到类似的数学符号， 他们都是通过相应的latex符号+ TAB键打印出来的。 你也可以通过复制一个符号， 然后用 `? 符号`的方式在REPL中获得其书写方法帮助。 或者使用`@doc 名字`的方式**获得一个名字的帮助文档**。
 下面是一些例子：
 """
 
@@ -249,106 +243,302 @@ v1.^2
 # ╔═╡ 0c64dab6-5952-497c-94bf-29a215d92789
 v1 .* v2
 
-# ╔═╡ 9fdacf84-ceef-43fb-82b1-a97fb65a6ac7
-typemax(Float16)
-
-# ╔═╡ 700de0bd-265f-40f2-b988-9031720179e6
-typemin(Float16)
-
-# ╔═╡ 8fc11111-51df-412d-b310-fa68349eee96
-1/0
-
-# ╔═╡ 9427f8d1-2adb-4eea-b477-a214f690cc1a
-0 * Inf
-
-# ╔═╡ f97ecf19-3643-4b2a-9089-876de65fa2f9
+# ╔═╡ 9abd7ef8-4d01-4801-8588-3b35db805d28
 md"""
-## 字符与字符串
-Julia支持Unicode编码， 单个的字符用**单引号**包裹。 字符串用**双引号**包裹，  也可以用三联双引号， 通常用于文档中。 字符的类型是Char， 字符串的类型是String。
+!!! tip "📝 提示" 
+	如果是要将一个函数的作用是加到多个元素上， 则是将点放在函数名后。
 """
 
-# ╔═╡ c62fdcbb-43d7-4743-a066-b122bf3a66cf
-typeof('a')
+# ╔═╡ d004b57c-99be-4728-a035-77d6aefb1fbe
+sin.(v1)
 
-# ╔═╡ 6189bd60-134e-45bc-b981-da05a7b774c3
-'中'
-
-# ╔═╡ 604a4580-eeb8-4155-9832-e6bdeec8c245
-length("我爱Julia！")
-
-# ╔═╡ 96271c13-fca0-46a4-9790-30801fbaa49d
+# ╔═╡ 76d57e71-e8e9-45fd-944b-c975fe2935de
 md"""
-#### 字符串的常用操作
-- `sizeof` 获取字符串（任何对象都可以）占用的字节数。
-- `length` 获取字符串的字符数量。
-- `*` 字符串拼接， 也可以使用`string`函数。
-- [i] 字符串索引(获取第i个字符）， 不过请注意Unicode字符串索引可能引发的问题。
-- [i:j] 字符串截取（获取索引号从i到j的所有字符）。
-- `$(var)` 用变量var的值插入字符串中。
-- **搜索**。 `findfirst`, `findlast`, 请使用`@doc 函数名` 的方式获取其使用方法。
-- occursin, contains 判断一个字符串是否包含某个子串（或模式）
-- startswith， endswith 判断字符串是否以某个子串开头或结尾
-- first, last 获取字符串前面或结尾的n个字符。
+## 总结
+
+1. Julia的变量名可以取任何的Unicode字符（不要跟系统关键字冲突）
+2. 数值类型很丰富， 不过先知道（Bool， Integer, Float）差不多了。
+3. 常见的运算符要了解。
+4. 点运算是Julia的特色， 非常常见。
 """
 
-# ╔═╡ 0ffbbd92-7a32-40c6-950f-ce67bf6a2953
-"good" * "morning"
+# ╔═╡ 00000000-0000-0000-0000-000000000001
+PLUTO_PROJECT_TOML_CONTENTS = """
+[deps]
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
-# ╔═╡ 361f6ff8-aea2-46d8-b111-81eddc103a30
-id = "352719200008101112"
-
-# ╔═╡ 374061f0-7020-4f8d-ac2c-73e60be9cb2b
-parse(Int64,id[11:12])
-
-# ╔═╡ 43161720-d202-4258-81d0-bfd4cbf7938f
-str = "我爱julia！"
-
-# ╔═╡ 2786dee7-73a3-4ec2-9eba-485d704debe1
-str[1:2]
-
-# ╔═╡ efadc49a-d796-4dee-b0ae-be15fe83e3e0
-sizeof("我")
-
-# ╔═╡ 520a56a3-faad-4210-9002-1a72ffe0e6f3
-str[1:4]
-
-# ╔═╡ 244bd7e2-09b8-4dc6-b916-73a4598150f1
-sizeof("我爱")
-
-# ╔═╡ c4c618e3-c485-4ab0-a526-9f93437e8e65
-length(str)
-
-# ╔═╡ a51a510a-2d17-4770-b982-7ee168c6e98b
-sizeof(str)
-
-# ╔═╡ 7f4c146a-e767-4989-b74a-339aa8e7f7e2
-str[1:4]
-
-# ╔═╡ 3b471035-860f-4a32-a149-5ce72b82ee65
-sizeof(str)
-
-# ╔═╡ 381ef733-af05-4da3-9848-b2efab9eed35
-length(str)
-
-# ╔═╡ 103f93df-470b-47e2-93d9-9210ae9895e5
-first(str, 2)
-
-# ╔═╡ 8e97b385-5e8a-4cc0-9257-09b1939ba6ad
-contains("JuliaLang is pretty cool!", "Julia")
-
-# ╔═╡ 42184826-69e6-4fa2-811d-36fe7fb219ee
-md"""
-字符串在数据分析中一种常用应用是： 我们读取的数据可能是字符串格式， 需要将其转换为数字。常使用的函数是`parse(type, str)`， 这个函数通常用于类型之间的转换。
+[compat]
+PlutoUI = "~0.7.51"
 """
 
-# ╔═╡ 9e2a0893-8912-4549-a050-29af947c88e1
-parse(Float64, "33222.45")
+# ╔═╡ 00000000-0000-0000-0000-000000000002
+PLUTO_MANIFEST_TOML_CONTENTS = """
+# This file is machine-generated - editing it directly is not advised
+
+julia_version = "1.9.0"
+manifest_format = "2.0"
+project_hash = "502a5e5263da26fcd619b7b7033f402a42a81ffc"
+
+[[deps.AbstractPlutoDingetjes]]
+deps = ["Pkg"]
+git-tree-sha1 = "8eaf9f1b4921132a4cff3f36a1d9ba923b14a481"
+uuid = "6e696c72-6542-2067-7265-42206c756150"
+version = "1.1.4"
+
+[[deps.ArgTools]]
+uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
+version = "1.1.1"
+
+[[deps.Artifacts]]
+uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+
+[[deps.Base64]]
+uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[deps.ColorTypes]]
+deps = ["FixedPointNumbers", "Random"]
+git-tree-sha1 = "eb7f0f8307f71fac7c606984ea5fb2817275d6e4"
+uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
+version = "0.11.4"
+
+[[deps.CompilerSupportLibraries_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
+version = "1.0.2+0"
+
+[[deps.Dates]]
+deps = ["Printf"]
+uuid = "ade2ca70-3891-5945-98fb-dc099432e06a"
+
+[[deps.Downloads]]
+deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
+uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+version = "1.6.0"
+
+[[deps.FileWatching]]
+uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+
+[[deps.FixedPointNumbers]]
+deps = ["Statistics"]
+git-tree-sha1 = "335bfdceacc84c5cdf16aadc768aa5ddfc5383cc"
+uuid = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
+version = "0.8.4"
+
+[[deps.Hyperscript]]
+deps = ["Test"]
+git-tree-sha1 = "8d511d5b81240fc8e6802386302675bdf47737b9"
+uuid = "47d2ed2b-36de-50cf-bf87-49c2cf4b8b91"
+version = "0.0.4"
+
+[[deps.HypertextLiteral]]
+deps = ["Tricks"]
+git-tree-sha1 = "c47c5fa4c5308f27ccaac35504858d8914e102f9"
+uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
+version = "0.9.4"
+
+[[deps.IOCapture]]
+deps = ["Logging", "Random"]
+git-tree-sha1 = "d75853a0bdbfb1ac815478bacd89cd27b550ace6"
+uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
+version = "0.2.3"
+
+[[deps.InteractiveUtils]]
+deps = ["Markdown"]
+uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[deps.JSON]]
+deps = ["Dates", "Mmap", "Parsers", "Unicode"]
+git-tree-sha1 = "31e996f0a15c7b280ba9f76636b3ff9e2ae58c9a"
+uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+version = "0.21.4"
+
+[[deps.LibCURL]]
+deps = ["LibCURL_jll", "MozillaCACerts_jll"]
+uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
+version = "0.6.3"
+
+[[deps.LibCURL_jll]]
+deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
+uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
+version = "7.84.0+0"
+
+[[deps.LibGit2]]
+deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
+uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
+
+[[deps.LibSSH2_jll]]
+deps = ["Artifacts", "Libdl", "MbedTLS_jll"]
+uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
+version = "1.10.2+0"
+
+[[deps.Libdl]]
+uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+
+[[deps.LinearAlgebra]]
+deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
+uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[[deps.Logging]]
+uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
+
+[[deps.MIMEs]]
+git-tree-sha1 = "65f28ad4b594aebe22157d6fac869786a255b7eb"
+uuid = "6c6e2e6c-3030-632d-7369-2d6c69616d65"
+version = "0.1.4"
+
+[[deps.Markdown]]
+deps = ["Base64"]
+uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
+
+[[deps.MbedTLS_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
+version = "2.28.2+0"
+
+[[deps.Mmap]]
+uuid = "a63ad114-7e13-5084-954f-fe012c677804"
+
+[[deps.MozillaCACerts_jll]]
+uuid = "14a3606d-f60d-562e-9121-12d972cd8159"
+version = "2022.10.11"
+
+[[deps.NetworkOptions]]
+uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
+version = "1.2.0"
+
+[[deps.OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+version = "0.3.21+4"
+
+[[deps.Parsers]]
+deps = ["Dates", "PrecompileTools", "UUIDs"]
+git-tree-sha1 = "a5aef8d4a6e8d81f171b2bd4be5265b01384c74c"
+uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
+version = "2.5.10"
+
+[[deps.Pkg]]
+deps = ["Artifacts", "Dates", "Downloads", "FileWatching", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
+uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
+version = "1.9.0"
+
+[[deps.PlutoUI]]
+deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "JSON", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
+git-tree-sha1 = "b478a748be27bd2f2c73a7690da219d0844db305"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.7.51"
+
+[[deps.PrecompileTools]]
+deps = ["Preferences"]
+git-tree-sha1 = "259e206946c293698122f63e2b513a7c99a244e8"
+uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
+version = "1.1.1"
+
+[[deps.Preferences]]
+deps = ["TOML"]
+git-tree-sha1 = "7eb1686b4f04b82f96ed7a4ea5890a4f0c7a09f1"
+uuid = "21216c6a-2e73-6563-6e65-726566657250"
+version = "1.4.0"
+
+[[deps.Printf]]
+deps = ["Unicode"]
+uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+
+[[deps.REPL]]
+deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
+uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
+
+[[deps.Random]]
+deps = ["SHA", "Serialization"]
+uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[[deps.Reexport]]
+git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
+uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+version = "1.2.2"
+
+[[deps.SHA]]
+uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+version = "0.7.0"
+
+[[deps.Serialization]]
+uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[[deps.Sockets]]
+uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
+
+[[deps.SparseArrays]]
+deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
+uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+
+[[deps.Statistics]]
+deps = ["LinearAlgebra", "SparseArrays"]
+uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+version = "1.9.0"
+
+[[deps.SuiteSparse_jll]]
+deps = ["Artifacts", "Libdl", "Pkg", "libblastrampoline_jll"]
+uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
+version = "5.10.1+6"
+
+[[deps.TOML]]
+deps = ["Dates"]
+uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+version = "1.0.3"
+
+[[deps.Tar]]
+deps = ["ArgTools", "SHA"]
+uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
+version = "1.10.0"
+
+[[deps.Test]]
+deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
+uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[[deps.Tricks]]
+git-tree-sha1 = "aadb748be58b492045b4f56166b5188aa63ce549"
+uuid = "410a4b4d-49e4-4fbc-ab6d-cb71b17b3775"
+version = "0.1.7"
+
+[[deps.URIs]]
+git-tree-sha1 = "074f993b0ca030848b897beff716d93aca60f06a"
+uuid = "5c2747f8-b7ea-4ff2-ba2e-563bfd36b1d4"
+version = "1.4.2"
+
+[[deps.UUIDs]]
+deps = ["Random", "SHA"]
+uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
+
+[[deps.Unicode]]
+uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
+
+[[deps.Zlib_jll]]
+deps = ["Libdl"]
+uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
+version = "1.2.13+0"
+
+[[deps.libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+version = "5.7.0+0"
+
+[[deps.nghttp2_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "8e850ede-7688-5339-a07c-302acd2aaf8d"
+version = "1.48.0+0"
+
+[[deps.p7zip_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
+version = "17.4.0+0"
+"""
 
 # ╔═╡ Cell order:
-# ╟─7f9aabc0-105f-4ef6-b0c3-9f9539202f22
+# ╟─51e56239-552b-43ca-8a36-6f0ea6f9d8be
+# ╟─88cc78ee-c228-4769-abdb-2946707c2301
 # ╟─a882c1f1-bbe8-4ae5-9639-269d8b8e3a05
-# ╠═c763528b-869d-4e25-9fef-fe30556e8ec9
-# ╠═da5df308-956e-4310-80e6-2286d14063e4
+# ╟─c763528b-869d-4e25-9fef-fe30556e8ec9
+# ╟─da5df308-956e-4310-80e6-2286d14063e4
 # ╠═3727eb83-7421-4d32-b3db-cafd2a5b4816
 # ╠═9c429008-6edd-43fa-8625-c3fbea8f2c81
 # ╠═5d06ed7e-d4ad-4d1b-90ef-3acae715e6d5
@@ -356,58 +546,36 @@ parse(Float64, "33222.45")
 # ╠═629fb06d-cb0a-4ffa-8d1c-4a55bba71cce
 # ╠═46b76b9d-7edb-4163-a892-85d3d1dd6863
 # ╠═982351d4-7065-4836-97e3-cd138065076c
-# ╠═90fd182e-8580-4187-97d8-dcd44940e86a
-# ╠═ebdd01c8-a5b9-4f29-a924-ac031967be0c
-# ╠═21bc77b9-eeaf-4d2a-ace6-d6aec98e9a4b
+# ╟─ebdd01c8-a5b9-4f29-a924-ac031967be0c
+# ╟─21bc77b9-eeaf-4d2a-ace6-d6aec98e9a4b
 # ╠═109ba8e7-aeef-49b3-84cb-2dc1082c7f07
-# ╠═aaa0b712-e6cd-492c-9ea0-ab2c07549754
+# ╟─aaa0b712-e6cd-492c-9ea0-ab2c07549754
 # ╠═d673f90f-f0d1-400f-958a-623c17d00ba5
-# ╠═f0b321cd-0fa1-47c9-983a-35a5d2c1ca80
-# ╠═aea5a22c-9976-4983-b932-0cf56766aff6
+# ╟─f0b321cd-0fa1-47c9-983a-35a5d2c1ca80
+# ╟─aea5a22c-9976-4983-b932-0cf56766aff6
 # ╠═4db40a79-2b6a-4ca9-8e3f-b285140ae5f6
 # ╠═eafe3147-624f-47e7-a7ed-0cc6e7f509a6
 # ╠═2f43fbeb-9f07-40b8-bdcc-23eb66c81b95
 # ╠═14e10f91-b51d-41c3-8bef-944237d7e58c
 # ╠═1c98d7ec-9f1a-499a-9060-94b72a8df03e
-# ╠═312f9a1c-e87b-4fbd-882c-788328e343bd
+# ╟─312f9a1c-e87b-4fbd-882c-788328e343bd
 # ╠═0471bf91-5788-4ac4-8b7e-c0a262952cbf
 # ╠═eacc9099-addc-4eb2-b8fd-6bea98d36408
-# ╠═cfa6971e-05b5-4aaa-b661-fa6562fecb99
+# ╟─cfa6971e-05b5-4aaa-b661-fa6562fecb99
 # ╠═b629150d-7192-44a6-ad4e-9c0b89c3dc3f
 # ╠═0b833df1-0385-4140-be7a-dba3c78de5e8
-# ╠═0122632d-bfa9-4aa7-a0b8-af4d993910dc
+# ╟─0122632d-bfa9-4aa7-a0b8-af4d993910dc
 # ╠═20f2d4b4-d78b-4e24-9474-f5b19333c495
 # ╠═5bd68245-bf74-4f08-9a93-7c892372ea65
 # ╠═39c55b9c-cb0b-4ed0-8216-02ab52c01f12
 # ╠═86522c2d-1258-47a5-a499-c12b57f100a0
-# ╠═70f11a60-32bd-4568-ad03-3ad26020953f
+# ╟─70f11a60-32bd-4568-ad03-3ad26020953f
 # ╠═1f90bc20-cadf-4645-9a83-499189778029
 # ╠═289fcca8-8449-4c44-99c1-955df51e878b
 # ╠═7b2490fd-cac1-4da7-b8f1-4903cb472533
 # ╠═0c64dab6-5952-497c-94bf-29a215d92789
-# ╠═9fdacf84-ceef-43fb-82b1-a97fb65a6ac7
-# ╠═700de0bd-265f-40f2-b988-9031720179e6
-# ╠═8fc11111-51df-412d-b310-fa68349eee96
-# ╠═9427f8d1-2adb-4eea-b477-a214f690cc1a
-# ╠═f97ecf19-3643-4b2a-9089-876de65fa2f9
-# ╠═c62fdcbb-43d7-4743-a066-b122bf3a66cf
-# ╠═6189bd60-134e-45bc-b981-da05a7b774c3
-# ╠═604a4580-eeb8-4155-9832-e6bdeec8c245
-# ╠═96271c13-fca0-46a4-9790-30801fbaa49d
-# ╠═0ffbbd92-7a32-40c6-950f-ce67bf6a2953
-# ╠═361f6ff8-aea2-46d8-b111-81eddc103a30
-# ╠═374061f0-7020-4f8d-ac2c-73e60be9cb2b
-# ╠═43161720-d202-4258-81d0-bfd4cbf7938f
-# ╠═2786dee7-73a3-4ec2-9eba-485d704debe1
-# ╠═efadc49a-d796-4dee-b0ae-be15fe83e3e0
-# ╠═520a56a3-faad-4210-9002-1a72ffe0e6f3
-# ╠═244bd7e2-09b8-4dc6-b916-73a4598150f1
-# ╠═c4c618e3-c485-4ab0-a526-9f93437e8e65
-# ╠═a51a510a-2d17-4770-b982-7ee168c6e98b
-# ╠═7f4c146a-e767-4989-b74a-339aa8e7f7e2
-# ╠═3b471035-860f-4a32-a149-5ce72b82ee65
-# ╠═381ef733-af05-4da3-9848-b2efab9eed35
-# ╠═103f93df-470b-47e2-93d9-9210ae9895e5
-# ╠═8e97b385-5e8a-4cc0-9257-09b1939ba6ad
-# ╠═42184826-69e6-4fa2-811d-36fe7fb219ee
-# ╠═9e2a0893-8912-4549-a050-29af947c88e1
+# ╟─9abd7ef8-4d01-4801-8588-3b35db805d28
+# ╠═d004b57c-99be-4728-a035-77d6aefb1fbe
+# ╟─76d57e71-e8e9-45fd-944b-c975fe2935de
+# ╟─00000000-0000-0000-0000-000000000001
+# ╟─00000000-0000-0000-0000-000000000002

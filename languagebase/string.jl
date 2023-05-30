@@ -17,7 +17,7 @@ typeof('a')
 '中'
 
 # ╔═╡ 8c0946e6-de78-4fc2-be99-b6b9976a7062
-length("我爱Julia！")
+typeof("我爱Julia！")
 
 # ╔═╡ 35b9801c-8a83-493d-abff-cd61cf6d1d72
 md"""
@@ -88,11 +88,11 @@ md"""
 parse(Float64, "33222.45")
 
 # ╔═╡ Cell order:
-# ╠═95bf6dab-60e9-45ab-840d-ce47d9a2c9f0
+# ╟─95bf6dab-60e9-45ab-840d-ce47d9a2c9f0
 # ╠═461b55f1-f20d-4bc4-838d-f0520a54ef46
 # ╠═e585f4f7-80f7-4f78-bc87-fbe29d4ccde0
 # ╠═8c0946e6-de78-4fc2-be99-b6b9976a7062
-# ╠═35b9801c-8a83-493d-abff-cd61cf6d1d72
+# ╟─35b9801c-8a83-493d-abff-cd61cf6d1d72
 # ╠═3ec030a2-c6c0-467d-9f7f-28fb8c62980e
 # ╠═eff2736c-f473-4912-83be-8fa627d3535d
 # ╠═b41d5c25-8bc7-4f8b-b531-271e1ec08ea7
